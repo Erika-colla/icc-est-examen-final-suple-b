@@ -1,9 +1,4 @@
 
-import controllers.ProductoController;
-import models.Producto;
-
-import java.util.*;
-
 public class Main {
     public static void main(String[] args) {
         List<Producto> lista = Arrays.asList(
@@ -41,26 +36,5 @@ public class Main {
 
         );
 
-        ProductoController controller = new ProductoController();
-
-        Set<Producto> ordenados = controller.ordenarProducto(lista);
-        Map<String, List<Producto>> clasificados = controller.clasificarPorUnicidad(ordenados);
-
-        List<Producto> destacados = controller.obtenerDestacados(lista);
-        Producto encontrado = controller.buscarPorNombre(destacados, "Pantalla OLED");
-
-        System.out.println("\n--- Productos Ordenados ---");
-        ordenados.forEach(System.out::println);
-
-        System.out.println("\n--- Clasificación por Unicidad ---");
-        clasificados.forEach((k, v) -> {
-            System.out.println(k + ": " + v);
-        });
-
-        System.out.println("\n--- Destacados ---");
-        destacados.forEach(System.out::println);
-
-        System.out.println("\n--- Búsqueda por Nombre ---");
-        System.out.println(encontrado != null ? encontrado : "No encontrado");
     }
 }

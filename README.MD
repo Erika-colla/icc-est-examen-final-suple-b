@@ -1,190 +1,155 @@
-# Examen Práctico
+
+
+# Examen Práctico – Evaluación de Productos
 
 ---
 
 ## 📄 Descripción General
 
-En un contexto académico, se requiere implementar una solución para gestionar un conjunto de estudiantes con funcionalidades que permitan:
+En un entorno comercial, se requiere gestionar una colección de productos mediante una serie de operaciones que permiten:
 
-* Filtrar y ordenar estudiantes según su rendimiento promedio.
-* Clasificar a los estudiantes según la diversidad de caracteres en su nombre.
-* Identificar estudiantes destacados.
-* Realizar búsquedas eficientes por nombre.
+* Eliminar duplicados por código y ordenar por nombre y código.
+* Clasificar los productos según la unicidad de caracteres en su nombre.
+* Identificar productos con precios repetidos.
+* Buscar productos destacados por nombre eficientemente.
 
-Estas operaciones simulan procesos de evaluación y clasificación en entornos educativos reales.
+Estas funciones simulan un sistema de análisis y evaluación de productos en inventario.
 
 ---
 
-## 🎓 Modelo: `Estudiante`
+## 🧾 Modelo: `Producto`
 
-Cada objeto `Estudiante` contiene:
+Cada objeto `Producto` tiene:
 
-* `nombre`: Nombre completo.
-* `cedula`: Identificador único.
-* `calificaciones`: Lista de 6 calificaciones (double) de 0 a 10.
+* `nombre`: Nombre del producto.
+* `codigo`: Identificador único del producto.
+* `precios`: Lista de precios históricos (mínimo 3, valores `double`).
 
 ### Campos Calculados:
 
-* `promedio`: Promedio entero de las 6 calificaciones.
-* `porcentajeUnicos`: Porcentaje de caracteres únicos en el nombre sin espacios.
+* `porcentajeCaracteresUnicos`: Porcentaje de caracteres únicos en el nombre, ignorando espacios y mayúsculas.
+* `catidadPreciosRepetidos`: Número de precios que se repiten en la lista de precios.
 
 Ejemplo:
 
 ```java
-Nombre: "Luis Luis"
-Caracteres sin espacios: "luisluis"
-Caracteres únicos: {l, u, i, s} (4)
-Porcentaje: 4 * 100 / 8 = 50%
+Nombre: "Teclado Logitech"
+Sin espacios: "tecladologitech"
+Caracteres únicos: {t, e, c, l, a, d, o, g, i, h} = 10
+Total caracteres: 15 → Porcentaje: (10 * 100) / 15 = 66%
+
+Precios: [50.0, 55.0, 50.0, 60.0] → Precios repetidos = 1
 ```
 
 ---
 
-## 💡 Clase a implementar: `EstudianteController`
+## 🔧 Clase a implementar: `ProductoController`
 
-### Método A – `ordenarPorPromedio(List<Estudiante>)`
+### Método A – `ordenarProducto(List<Producto>)`
 
-* Retorna un `TreeSet<Estudiante>`.
+* Retorna un `TreeSet<Producto>`.
+* Elimina duplicados por `codigo`.
 * Ordena por:
 
-  * Promedio (descendente)
-  * Nombre (ascendente)
-  * Cédula (ascendente)
-* Si la cédula ya está en el conjunto, **no se agrega** aunque los otros campos sean distintos.
+  1. Nombre (ascendente)
+  2. Código (ascendente)
 
-### Método B – `clasificarPorPorcentaje(Set<Estudiante>)`
-
-* Agrupa estudiantes en un `Map<String, List<Estudiante>>` según el campo `porcentajeUnicos`:
-
-| Rango de Porcentaje | Categoría |
-| ------------------- | --------- |
-| 90 - 100            | A         |
-| 70 - 89             | B         |
-| 50 - 69             | C         |
-| 30 - 49             | D         |
-| 0  - 29             | E         |
-
-* El orden en cada lista debe respetar el orden de entrada (usa `LinkedList`).
-
-### Método C – `obtenerEstudiantesDestacados(List<Estudiante>)`
-
-* Filtra estudiantes con promedio > 7.0.
-* Retorna lista ordenada por nombre ascendente.
-
-### Método D – `buscarPorNombre(List<Estudiante>, String)`
-
-* Busca en una lista ordenada por nombre usando **búsqueda binaria**.
-* Retorna el estudiante correspondiente o `null`.
+> La clase `Producto` debe implementar `Comparable` respetando esta lógica.
 
 ---
 
-## 📊 Ejemplo de Ejecución (con `crearEstudiantes()`) donde se tiene el siguiente listado inicial
+### Método B – `clasificarPorUnicidad(Set<Producto>)`
+
+* Retorna un `Map<String, List<Producto>>` agrupando productos por el porcentaje de unicidad de caracteres en el nombre.
+
+| Rango Porcentaje | Categoría |
+| ---------------- | --------- |
+| 90–100           | A         |
+| 70–89            | B         |
+| 50–69            | C         |
+| 30–49            | D         |
+| 0–29             | E         |
+
+> Usa `LinkedHashMap` y `LinkedList` para conservar el orden de inserción.
+
+---
+
+### Método C – `obtenerDestacados(List<Producto>)`
+
+* Filtra los productos con más de un precio repetido.
+* Retorna la lista ordenada por nombre ascendente.
+
+---
+
+### Método D – `buscarPorNombre(List<Producto> lista, String nombre)`
+
+* Aplica búsqueda binaria sobre la lista ordenada por nombre.
+* Retorna el producto correspondiente o `null`.
+
+---
+
+## 📊 Ejemplo de ejecución esperada
 
 ```java
-List<Estudiante> estudiantes = Arrays.asList(
-                new Estudiante("Ana Torres", "0101010101", Arrays.asList(8.5, 9.0, 7.5, 10.0, 9.5, 8.0)),
-                new Estudiante("Luis Luis", "0202020202", Arrays.asList(6.0, 7.5, 8.0, 6.5, 7.0, 6.0)),
-                new Estudiante("Camila Vera", "0303030303", Arrays.asList(10.0, 10.0, 10.0, 9.5, 9.0, 9.5)),
-                new Estudiante("Marco Luis Luis", "0202020202", Arrays.asList(8.0, 7.5, 9.0, 8.5, 7.0, 8.0)), // Cedula
-                // repetida
-                new Estudiante("Elena Ruiz", "0404040404", Arrays.asList(5.0, 1.0, 4.5, 6.0, 5.5, 6.5)),
-                new Estudiante("Carlos Díaz", "0505050505", Arrays.asList(9.5, 1.0, 3.5, 10.0, 10.0, 10.0)),
-                new Estudiante("Luis  Luis Luis Luis", "0606060606",
-                        Arrays.asList(1.0, 2.0, 7.0, 1.0, 7.0, 7.0)),
-                new Estudiante("Luis  Luis Luis Luis", "0606060602",
-                        Arrays.asList(1.0, 2.0, 7.0, 1.0, 7.0, 7.0)),
-                new Estudiante("Luis  Luis Luis Luis", "0606060603",
-                        Arrays.asList(1.0, 2.0, 7.0, 1.0, 7.0, 7.0)),
-                new Estudiante("Luis  Luis Luis Luis", "0606060604",
-                        Arrays.asList(1.0, 2.0, 7.0, 3.0, 7.0, 7.0)),
-                new Estudiante("Luis  Luis Luis Luis", "0606060605",
-                        Arrays.asList(5.0, 2.0, 7.0, 5.0, 7.0, 7.0)));
+List<Producto> productos = Arrays.asList(
+    new Producto("Monitor Samsung", "P001", Arrays.asList(150.0, 150.0, 160.0)),
+    new Producto("Teclado Logitech", "P002", Arrays.asList(50.0, 55.0, 50.0, 60.0)),
+    new Producto("Mouse Logitech", "P003", Arrays.asList(30.0, 30.0, 30.0)),
+    new Producto("Monitor Samsung", "P001", Arrays.asList(150.0, 155.0)), // código repetido
+    new Producto("Cámara Web", "P004", Arrays.asList(100.0, 100.0, 120.0)),
+    new Producto("Auriculares", "P005", Arrays.asList(80.0, 90.0, 100.0))
+);
 ```
-Salida esperada del listado original con los campos calculados:
+
+### Resultado consola:
 
 ```java
-1.- Ana Torres (0101010101) Porcentaje de caracteres únicos: 77%, Promedio: 8
-2.- Luis Luis (0202020202) Porcentaje de caracteres únicos: 50%, Promedio: 6
-3.- Camila Vera (0303030303) Porcentaje de caracteres únicos: 80%, Promedio: 9
-4.- Marco Luis Luis (0202020202) Porcentaje de caracteres únicos: 69%, Promedio: 7
-5.- Elena Ruiz (0404040404) Porcentaje de caracteres únicos: 88%, Promedio: 4
-6.- Carlos Díaz (0505050505) Porcentaje de caracteres únicos: 90%, Promedio: 7
-7.- Luis  Luis Luis Luis (0606060606) Porcentaje de caracteres únicos: 25%, Promedio: 4
-8.- Luis  Luis Luis Luis (0606060602) Porcentaje de caracteres únicos: 25%, Promedio: 4
-9.- Luis  Luis Luis Luis (0606060603) Porcentaje de caracteres únicos: 25%, Promedio: 4
-10.- Luis  Luis Luis Luis (0606060604) Porcentaje de caracteres únicos: 25%, Promedio: 4
-11.- Luis  Luis Luis Luis (0606060605) Porcentaje de caracteres únicos: 25%, Promedio: 5
-```
-
-## 📝 Resultado de Ejecución del controllador
-
-```java
-Estudiantes ordenados por promedio (desc), nombre(asc), cédula (asc); (sin repetir cédulas):
-1.- Camila Vera - Porcentaje: 80%, Promedio: 9
-2.- Ana Torres - Porcentaje: 77%, Promedio: 8
-3.- Carlos Díaz - Porcentaje: 90%, Promedio: 7
-4.- Luis Luis - Porcentaje: 50%, Promedio: 6
-5.- Luis  Luis Luis Luis - Porcentaje: 25%, Promedio: 5
-6.- Elena Ruiz - Porcentaje: 88%, Promedio: 4
-7.- Luis  Luis Luis Luis - Porcentaje: 25%, Promedio: 4
-8.- Luis  Luis Luis Luis - Porcentaje: 25%, Promedio: 4
-9.- Luis  Luis Luis Luis - Porcentaje: 25%, Promedio: 4
-10.- Luis  Luis Luis Luis - Porcentaje: 25%, Promedio: 4
-```
- Se eliminaron duplicados por cédula.
-
-```java
+Productos ordenados por nombre y código (sin duplicados):
+1. Auriculares (P005)
+2. Cámara Web (P004)
+3. Monitor Samsung (P001)
+4. Mouse Logitech (P003)
+5. Teclado Logitech (P002)
 
 Clasificación por porcentaje de caracteres únicos:
-- Categoría A: [ Carlos Díaz;  ]
-- Categoría B: [ Camila Vera;  Ana Torres;  Elena Ruiz;  ]
-- Categoría C: [ Luis Luis;  ]
-- Categoría D: [  ]
-- Categoría E: [ Luis Luis Luis; (x5) ]
-```
+A: []
+B: [Teclado Logitech]
+C: [Auriculares, Mouse Logitech]
+D: [Monitor Samsung]
+E: [Cámara Web]
 
+Productos destacados (precios repetidos > 1):
+- Cámara Web
+- Mouse Logitech
+- Teclado Logitech
 
-```java
-Estudiantes destacados (promedio > 7):
-- Ana Torres
-- Camila Vera
-```
-
-```java
-Estdiante busado por nombre "Camila Vera":
-Estudiante encontrado: Camila Vera (0303030303) Porcentaje de caracteres únicos: 80%, Promedio: 9
+Producto buscado por nombre "Teclado Logitech":
+→ Teclado Logitech (P002)
 ```
 
 ---
 
-## 📆 RÚBRICA DE EVALUACIÓN (9 puntos)
-| **Componente Evaluado**                      | **Descripción**                                                                                                                                             | **Puntos** |
-| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| ✅ Campo calculado: `porcentajeUnicos`        | Calcula correctamente el porcentaje de caracteres únicos del nombre (sin espacios, ignorando mayúsculas).                                                   | 3.0        |
-| ✅ Campo calculado: `promedio`                | Calcula correctamente el promedio entero (sin decimales) de las 6 calificaciones.                                                                           | 3.0        |
-| 🔷 Método A – `ordenarPorPromedio`           | Ordena correctamente el `TreeSet` de forma descendente por promedio, luego nombre, luego cédula. Elimina duplicados por cédula.                             | 6.0        |
-| 🔷 Método B – `clasificarPorPorcentaje`      | Agrupa correctamente en un `Map<String, List<Estudiante>>` usando letras A–E según rangos de porcentaje. Conserva el orden del TreeSet usando `LinkedList`. | 6.0        |
-| 🔷 Método C – `obtenerEstudiantesDestacados` | Filtra correctamente los estudiantes con promedio > 7.0, y los ordena por nombre.                                                                           | 5.0        |
-| 🔷 Método D – `buscarPorNombre`              | Implementa búsqueda binaria correctamente sobre lista ordenada por nombre.                                                                                  | 4.0        |
-| 🖨️ Impresiones esperadas en consola         | Se imprime correctamente el resultado de cada método de forma ordenada y comprensible (por ejemplo: título antes de cada bloque).                           | 3.0        |
-| 💯 **Total**                                 | | **30.0**   |
+## 📆 RÚBRICA DE EVALUACIÓN (30 puntos)
+
+| **Componente Evaluado**                    | **Descripción**                                                                                     | **Puntos** |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------- | ---------- |
+| ✅ `getCatidadPreciosRepetidos()`           | Calcula correctamente la cantidad de precios repetidos.                                             | 3.0        |
+| ✅ `getPorcentajeCaracteresUnicos()`        | Calcula correctamente el porcentaje de caracteres únicos del nombre (sin espacios, sin mayúsculas). | 3.0        |
+| 🔷 Método A – `ordenarProducto(...)`       | Elimina duplicados por código y ordena correctamente por nombre y código.                           | 6.0        |
+| 🔷 Método B – `clasificarPorUnicidad(...)` | Agrupa correctamente en `Map<String, List<Producto>>` según rangos. Respeta el orden de entrada.    | 6.0        |
+| 🔷 Método C – `obtenerDestacados(...)`     | Filtra y ordena correctamente productos con más de un precio repetido.                              | 5.0        |
+| 🔷 Método D – `buscarPorNombre(...)`       | Implementa búsqueda binaria correctamente sobre lista ordenada por nombre.                          | 4.0        |
+| 🖨️ Salidas esperadas                      | Se imprime de forma ordenada y clara cada bloque de ejecución en consola.                           | 3.0        |
+| 💯 **Total**                               |                                                                                                     | **30.0**   |
 
 ---
 
-## 💼 Validación Automática
+## 🧪 Validación Automática
 
-La evaluación automática ejecutará pruebas unitarias para validar:
+Las pruebas unitarias validarán:
 
-* Cálculo de campos `promedio` y `porcentajeUnicos`
-* Comportamiento esperado de cada método (A, B, C, D)
-* Correcta manipulación de estructuras: `TreeSet`, `Map`, `List`
+* Cálculos correctos de unicidad y repetición.
+* Lógica de ordenamiento y clasificación.
+* Precisión en la búsqueda binaria.
+* Uso correcto de `TreeSet`, `Map`, `List`, y `Set`.
 
----
-
-**⚠️ Importante**: Asegúrate de que tu método `compare(...)` en el `TreeSet` respete la unicidad por cédula. De lo contrario, los datos duplicados no serán eliminados correctamente y se penalizará.
-
----
-
-
-javac --release 17 -cp "lib/*" -d bin src/validaciones/ValidTest.java src/models/Estudiante.java
-jar cf lib/validadores-evaluacion.jar -C bin validaciones -C bin models
-jar tf lib/validadores-evaluacion.jar
