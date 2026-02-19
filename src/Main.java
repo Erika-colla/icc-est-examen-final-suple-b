@@ -1,3 +1,12 @@
+import java.security.KeyStore.Entry;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
+
+import controllers.ProductoController;
+import models.Producto;
 
 public class Main {
     public static void main(String[] args) {
@@ -35,6 +44,35 @@ public class Main {
                 new Producto("Ventilador USB", "030", Arrays.asList(8.0, 10.0, 8.0, 12.0, 10.0))
 
         );
+
+        ProductoController controller = new ProductoController();
+        System.out.println("--- Lista Oroginal: ---");
+        for (Producto p : lista) {
+            System.out.println(p);
+        }
+
+        System.out.println("--- Metodo A ---");
+        TreeSet<Producto> orden = controller.ordenarProducto(lista);
+        for (Producto producto : orden) {
+            System.out.println(producto);
+        }
+        
+
+        System.out.println("--- Metodo B ---");
+        Map<String, List<Producto>> clasificados = controller.clasificarPorUnicidad(orden);
+        System.out.println(clasificados);
+        
+
+        System.out.println("--- Metodo C ---");
+        List<Producto> destacados = controller.obtenerDestacados(lista);
+        for (Producto p : destacados) {
+            System.out.println(p);
+        }
+
+        System.out.println("--- Metodo D ---");
+        List<Producto> listaOrdenados = new ArrayList<>(orden);
+        Producto buscado = controller.buscarPorNombre(listaOrdenados, "Teclado Logitech");
+        System.out.println("Producto Encontrado:" + buscado);
 
     }
 }
