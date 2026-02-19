@@ -1,7 +1,7 @@
 
 public class Main {
     public static void main(String[] args) {
-        List<Producto> lista = Arrays.asList(
+        List<Producto> lista  = Arrays.asList(
                 new Producto("Cámara Digital", "001", Arrays.asList(99.0, 101.0, 100.0)),
                 new Producto("Cámara Ddafadsigital", "001", Arrays.asList(99.0, 101.0, 101.0, 100.0)),
                 new Producto("Mouse Inalámbrico", "002", Arrays.asList(45.0, 50.0, 55.0, 55.0)),
