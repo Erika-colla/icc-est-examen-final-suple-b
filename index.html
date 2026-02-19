@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>README.MD</title>
+	<meta
+		http-equiv="Content-type"
+		content="text/html;charset=UTF-8"
+	>
+
+	<style>
+		/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+		/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+		body {
+			font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+			font-size: var(--vscode-markdown-font-size, 14px);
+			padding: 0 26px;
+			line-height: var(--vscode-markdown-line-height, 22px);
+			word-wrap: break-word;
+		}
+
+		#code-csp-warning {
+			position: fixed;
+			top: 0;
+			right: 0;
+			color: white;
+			margin: 16px;
+			text-align: center;
+			font-size: 12px;
+			font-family: sans-serif;
+			background-color: #444444;
+			cursor: pointer;
+			padding: 6px;
+			box-shadow: 1px 1px 1px rgba(0, 0, 0, .25);
+		}
+
+		#code-csp-warning:hover {
+			text-decoration: none;
+			background-color: #007acc;
+			box-shadow: 2px 2px 2px rgba(0, 0, 0, .25);
+		}
+
+		body.scrollBeyondLastLine {
+			margin-bottom: calc(100vh - 22px);
+		}
+
+		body.showEditorSelection .code-line {
+			position: relative;
+		}
+
+		body.showEditorSelection .code-active-line:before,
+		body.showEditorSelection .code-line:hover:before {
+			content: "";
+			display: block;
+			position: absolute;
+			top: 0;
+			left: -12px;
+			height: 100%;
+		}
+
+		body.showEditorSelection li.code-active-line:before,
+		body.showEditorSelection li.code-line:hover:before {
+			left: -30px;
+		}
+
+		.vscode-light.showEditorSelection .code-active-line:before {
+			border-left: 3px solid rgba(0, 0, 0, 0.15);
+		}
+
+		.vscode-light.showEditorSelection .code-line:hover:before {
+			border-left: 3px solid rgba(0, 0, 0, 0.40);
+		}
+
+		.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+			border-left: none;
+		}
+
+		.vscode-dark.showEditorSelection .code-active-line:before {
+			border-left: 3px solid rgba(255, 255, 255, 0.4);
+		}
+
+		.vscode-dark.showEditorSelection .code-line:hover:before {
+			border-left: 3px solid rgba(255, 255, 255, 0.60);
+		}
+
+		.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+			border-left: none;
+		}
+
+		.vscode-high-contrast.showEditorSelection .code-active-line:before {
+			border-left: 3px solid rgba(255, 160, 0, 0.7);
+		}
+
+		.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+			border-left: 3px solid rgba(255, 160, 0, 1);
+		}
+
+		.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+			border-left: none;
+		}
+
+		img {
+			max-width: 100%;
+			max-height: 100%;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		a:hover {
+			text-decoration: underline;
+		}
+
+		a:focus,
+		input:focus,
+		select:focus,
+		textarea:focus {
+			outline: 1px solid -webkit-focus-ring-color;
+			outline-offset: -1px;
+		}
+
+		hr {
+			border: 0;
+			height: 2px;
+			border-bottom: 2px solid;
+		}
+
+		h1 {
+			padding-bottom: 0.3em;
+			line-height: 1.2;
+			border-bottom-width: 1px;
+			border-bottom-style: solid;
+		}
+
+		h1,
+		h2,
+		h3 {
+			font-weight: normal;
+		}
+
+		table {
+			border-collapse: collapse;
+		}
+
+		table>thead>tr>th {
+			text-align: left;
+			border-bottom: 1px solid;
+		}
+
+		table>thead>tr>th,
+		table>thead>tr>td,
+		table>tbody>tr>th,
+		table>tbody>tr>td {
+			padding: 5px 10px;
+		}
+
+		table>tbody>tr+tr>td {
+			border-top: 1px solid;
+		}
+
+		blockquote {
+			margin: 0 7px 0 5px;
+			padding: 0 16px 0 10px;
+			border-left-width: 5px;
+			border-left-style: solid;
+		}
+
+		code {
+			font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+			font-size: 1em;
+			line-height: 1.357em;
+		}
+
+		body.wordWrap pre {
+			white-space: pre-wrap;
+		}
+
+		pre:not(.hljs),
+		pre.hljs code>div {
+			padding: 16px;
+			border-radius: 3px;
+			overflow: auto;
+		}
+
+		pre code {
+			color: var(--vscode-editor-foreground);
+			tab-size: 4;
+		}
+
+		/** Theming */
+
+		.vscode-light pre {
+			background-color: rgba(220, 220, 220, 0.4);
+		}
+
+		.vscode-dark pre {
+			background-color: rgba(10, 10, 10, 0.4);
+		}
+
+		.vscode-high-contrast pre {
+			background-color: rgb(0, 0, 0);
+		}
+
+		.vscode-high-contrast h1 {
+			border-color: rgb(0, 0, 0);
+		}
+
+		.vscode-light table>thead>tr>th {
+			border-color: rgba(0, 0, 0, 0.69);
+		}
+
+		.vscode-dark table>thead>tr>th {
+			border-color: rgba(255, 255, 255, 0.69);
+		}
+
+		.vscode-light h1,
+		.vscode-light hr,
+		.vscode-light table>tbody>tr+tr>td {
+			border-color: rgba(0, 0, 0, 0.18);
+		}
+
+		.vscode-dark h1,
+		.vscode-dark hr,
+		.vscode-dark table>tbody>tr+tr>td {
+			border-color: rgba(255, 255, 255, 0.18);
+		}
+	</style>
+
+	<style>
+		/* Tomorrow Theme */
+		/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+		/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+		/* Tomorrow Comment */
+		.hljs-comment,
+		.hljs-quote {
+			color: #8e908c;
+		}
+
+		/* Tomorrow Red */
+		.hljs-variable,
+		.hljs-template-variable,
+		.hljs-tag,
+		.hljs-name,
+		.hljs-selector-id,
+		.hljs-selector-class,
+		.hljs-regexp,
+		.hljs-deletion {
+			color: #c82829;
+		}
+
+		/* Tomorrow Orange */
+		.hljs-number,
+		.hljs-built_in,
+		.hljs-builtin-name,
+		.hljs-literal,
+		.hljs-type,
+		.hljs-params,
+		.hljs-meta,
+		.hljs-link {
+			color: #f5871f;
+		}
+
+		/* Tomorrow Yellow */
+		.hljs-attribute {
+			color: #eab700;
+		}
+
+		/* Tomorrow Green */
+		.hljs-string,
+		.hljs-symbol,
+		.hljs-bullet,
+		.hljs-addition {
+			color: #718c00;
+		}
+
+		/* Tomorrow Blue */
+		.hljs-title,
+		.hljs-section {
+			color: #4271ae;
+		}
+
+		/* Tomorrow Purple */
+		.hljs-keyword,
+		.hljs-selector-tag {
+			color: #8959a8;
+		}
+
+		.hljs {
+			display: block;
+			overflow-x: auto;
+			color: #4d4d4c;
+			padding: 0.5em;
+		}
+
+		.hljs-emphasis {
+			font-style: italic;
+		}
+
+		.hljs-strong {
+			font-weight: bold;
+		}
+	</style>
+
+	<style>
+		/*
+ * Markdown PDF CSS
+ */
+
+		body {
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+			padding: 0 12px;
+		}
+
+		pre {
+			background-color: #f8f8f8;
+			border: 1px solid #cccccc;
+			border-radius: 3px;
+			overflow-x: auto;
+			white-space: pre-wrap;
+			overflow-wrap: break-word;
+		}
+
+		pre:not(.hljs) {
+			padding: 23px;
+			line-height: 19px;
+		}
+
+		blockquote {
+			background: rgba(127, 127, 127, 0.1);
+			border-color: rgba(0, 122, 204, 0.5);
+		}
+
+		.emoji {
+			height: 1.4em;
+		}
+
+		code {
+			font-size: 14px;
+			line-height: 19px;
+		}
+
+		/* for inline code */
+		:not(pre):not(.hljs)>code {
+			color: #C9AE75;
+			/* Change the old color so it seems less like an error */
+			font-size: inherit;
+		}
+
+		/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+		.page {
+			page-break-after: always;
+		}
+	</style>
+
+	<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+	<style>
+		body {
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+	</style>
+	<script>
+		document.addEventListener('contextmenu', function (e) {
+			e.preventDefault();
+		});
+	</script>
+	<style>
+		@media print {
+			body {
+				display: none !important;
+			}
+		}
+	</style>
+	<script>
+		document.addEventListener('keydown', function (e) {
+			if (
+				e.ctrlKey &&
+				(e.key === 'p' || e.key === 's' || e.key === 'u' || e.key === 'c')
+			) {
+				e.preventDefault();
+			}
+		});
+	</script>
+	<script>
+		document.addEventListener('keydown', function (e) {
+			if (e.key === 'F12') e.preventDefault();
+		});
+	</script>
+</head>
+
+<body>
+	<script>
+		mermaid.initialize({
+			startOnLoad: true,
+			theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+				? 'dark'
+				: 'default'
+		});
+	</script>
+	<h2 id="examen-pr%C3%A1ctico-%E2%80%93-evaluaci%C3%B3n-de-productos">Examen Práctico – Evaluación de Productos</h2>
+	<hr>
+	<h2 id="descripci%C3%B3n-general">Descripción General</h2>
+	<p>En un entorno comercial se requiere gestionar una colección de productos mediante operaciones que permitan:</p>
+	<ul>
+		<li>Eliminar duplicados por código y ordenar los productos por nombre y código.</li>
+		<li>Clasificarlos según la unicidad de caracteres en su nombre.</li>
+		<li>Identificar productos con precios repetidos.</li>
+		<li>Buscar productos destacados por nombre de forma eficiente.</li>
+	</ul>
+	<p>Estas operaciones simulan un sistema de análisis y evaluación de inventario.</p>
+	<hr>
+	<h2 id="modelo-producto">Modelo: <code>Producto</code></h2>
+	<p>Cada objeto <code>Producto</code> contiene:</p>
+	<ul>
+		<li><code>nombre</code>: nombre del producto.</li>
+		<li><code>codigo</code>: identificador único del producto.</li>
+		<li><code>precios</code>: lista de precios históricos (mínimo 3 valores <code>double</code>).</li>
+	</ul>
+	<h3 id="campos-calculados">Campos calculados</h3>
+	<ul>
+		<li><code>porcentajeCaracteresUnicos</code>: porcentaje de caracteres únicos en el nombre, ignorando espacios y
+			sin distinguir mayúsculas y minúsculas.</li>
+		<li><code>cantidadPreciosRepetidos</code>: número de valores de precio que se repiten en la lista.</li>
+	</ul>
+	<p>Ejemplo:</p>
+	<pre class="hljs"><code><div>Nombre: <span class="hljs-string">"Teclado Logitech"</span>
+Sin espacios: <span class="hljs-string">"tecladologitech"</span>
+Caracteres únicos: {t, e, c, l, a, d, o, g, i, h} = <span class="hljs-number">10</span>
+Total caracteres: <span class="hljs-number">15</span>
+Porcentaje = (<span class="hljs-number">10</span> * <span class="hljs-number">100</span>) / <span class="hljs-number">15</span> = <span class="hljs-number">66</span>
+
+Precios: [<span class="hljs-number">50.0</span>, <span class="hljs-number">55.0</span>, <span class="hljs-number">50.0</span>, <span class="hljs-number">60.0</span>]
+Precios repetidos = <span class="hljs-number">1</span>
+</div></code></pre>
+	<hr>
+	<h2 id="clase-a-implementar-productocontroller">Clase a implementar: <code>ProductoController</code></h2>
+	<h3 id="m%C3%A9todo-a-%E2%80%93-ordenarproductolistproducto-lista">Método A –
+		<code>ordenarProducto(List&lt;Producto&gt; lista)</code>
+	</h3>
+	<ul>
+		<li>
+			<p>Retorna un <code>TreeSet&lt;Producto&gt;</code>.</p>
+		</li>
+		<li>
+			<p>Elimina duplicados por <code>codigo</code>.</p>
+		</li>
+		<li>
+			<p>Ordena por:</p>
+			<ol>
+				<li><code>nombre</code> ascendente.</li>
+				<li><code>codigo</code> ascendente.</li>
+			</ol>
+		</li>
+	</ul>
+	<p>La clase <code>Producto</code> debe implementar <code>Comparable&lt;Producto&gt;</code> respetando esta lógica de
+		ordenamiento.</p>
+	<hr>
+	<h3 id="m%C3%A9todo-b-%E2%80%93-clasificarporunicidadsetproducto-productos">Método B –
+		<code>clasificarPorUnicidad(Set&lt;Producto&gt; productos)</code>
+	</h3>
+	<ul>
+		<li>Retorna un <code>Map&lt;String, List&lt;Producto&gt;&gt;</code>.</li>
+		<li>Agrupa los productos según el porcentaje de unicidad de caracteres del nombre.</li>
+	</ul>
+	<table>
+		<thead>
+			<tr>
+				<th>Rango porcentaje</th>
+				<th>Categoría</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>90–100</td>
+				<td>A</td>
+			</tr>
+			<tr>
+				<td>70–89</td>
+				<td>B</td>
+			</tr>
+			<tr>
+				<td>50–69</td>
+				<td>C</td>
+			</tr>
+			<tr>
+				<td>30–49</td>
+				<td>D</td>
+			</tr>
+			<tr>
+				<td>0–29</td>
+				<td>E</td>
+			</tr>
+		</tbody>
+	</table>
+	<p>Debe utilizar <code>LinkedHashMap</code> y <code>LinkedList</code> para conservar el orden de inserción.</p>
+	<hr>
+	<h3 id="m%C3%A9todo-c-%E2%80%93-obtenerdestacadoslistproducto-lista">Método C –
+		<code>obtenerDestacados(List&lt;Producto&gt; lista)</code>
+	</h3>
+	<ul>
+		<li>Filtra los productos con más de un precio repetido.</li>
+		<li>Retorna una lista ordenada por nombre en orden ascendente.</li>
+	</ul>
+	<hr>
+	<h3 id="m%C3%A9todo-d-%E2%80%93-buscarpornombrelistproducto-lista-string-nombre">Método D –
+		<code>buscarPorNombre(List&lt;Producto&gt; lista, String nombre)</code>
+	</h3>
+	<ul>
+		<li>Aplica búsqueda binaria sobre una lista previamente ordenada por nombre.</li>
+		<li>Retorna el producto correspondiente o <code>null</code> si no existe.</li>
+	</ul>
+	<hr>
+	<h2 id="ejemplo-de-ejecuci%C3%B3n">Ejemplo de ejecución</h2>
+	<pre class="hljs"><code><div>List&lt;Producto&gt; productos = Arrays.asList(
+    <span class="hljs-keyword">new</span> Producto(<span class="hljs-string">"Monitor Samsung"</span>, <span class="hljs-string">"P001"</span>, Arrays.asList(<span class="hljs-number">150.0</span>, <span class="hljs-number">150.0</span>, <span class="hljs-number">160.0</span>)),
+    <span class="hljs-keyword">new</span> Producto(<span class="hljs-string">"Teclado Logitech"</span>, <span class="hljs-string">"P002"</span>, Arrays.asList(<span class="hljs-number">50.0</span>, <span class="hljs-number">55.0</span>, <span class="hljs-number">50.0</span>, <span class="hljs-number">60.0</span>)),
+    <span class="hljs-keyword">new</span> Producto(<span class="hljs-string">"Mouse Logitech"</span>, <span class="hljs-string">"P003"</span>, Arrays.asList(<span class="hljs-number">30.0</span>, <span class="hljs-number">30.0</span>, <span class="hljs-number">30.0</span>)),
+    <span class="hljs-keyword">new</span> Producto(<span class="hljs-string">"Monitor Samsung"</span>, <span class="hljs-string">"P001"</span>, Arrays.asList(<span class="hljs-number">150.0</span>, <span class="hljs-number">155.0</span>)),
+    <span class="hljs-keyword">new</span> Producto(<span class="hljs-string">"Cámara Web"</span>, <span class="hljs-string">"P004"</span>, Arrays.asList(<span class="hljs-number">100.0</span>, <span class="hljs-number">100.0</span>, <span class="hljs-number">120.0</span>)),
+    <span class="hljs-keyword">new</span> Producto(<span class="hljs-string">"Auriculares"</span>, <span class="hljs-string">"P005"</span>, Arrays.asList(<span class="hljs-number">80.0</span>, <span class="hljs-number">90.0</span>, <span class="hljs-number">100.0</span>))
+);
+</div></code></pre>
+	<h3 id="resultado-esperado-en-consola">Resultado esperado en consola</h3>
+	<pre class="hljs"><code><div>Productos ordenados por nombre y código (sin duplicados):
+<span class="hljs-number">1</span>. Auriculares (P005)
+<span class="hljs-number">2</span>. <span class="hljs-function">Cámara <span class="hljs-title">Web</span> <span class="hljs-params">(P004)</span>
+3. Monitor <span class="hljs-title">Samsung</span> <span class="hljs-params">(P001)</span>
+4. Mouse <span class="hljs-title">Logitech</span> <span class="hljs-params">(P003)</span>
+5. Teclado <span class="hljs-title">Logitech</span> <span class="hljs-params">(P002)</span>
+
+Clasificación por porcentaje de caracteres únicos:
+A: []
+B: [Teclado Logitech]
+C: [Auriculares, Mouse Logitech]
+D: [Monitor Samsung]
+E: [Cámara Web]
+
+Productos <span class="hljs-title">destacados</span> <span class="hljs-params">(más de un precio repetido)</span>:
+- Cámara Web
+- Mouse Logitech
+- Teclado Logitech
+
+Producto buscado por nombre "Teclado Logitech":
+→ Teclado <span class="hljs-title">Logitech</span> <span class="hljs-params">(P002)</span>
+</span></div></code></pre>
+	<hr>
+	<h2 id="r%C3%BAbrica-de-evaluaci%C3%B3n-50-puntos">RÚBRICA DE EVALUACIÓN (50 puntos)</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Componente Evaluado</th>
+				<th>Descripción</th>
+				<th>Puntos</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><code>getCantidadPreciosRepetidos()</code></td>
+				<td>Calcula correctamente la cantidad de precios repetidos.</td>
+				<td>6.0</td>
+			</tr>
+			<tr>
+				<td><code>getPorcentajeCaracteresUnicos()</code></td>
+				<td>Calcula correctamente el porcentaje de caracteres únicos (sin espacios y sin distinguir mayúsculas).
+				</td>
+				<td>6.0</td>
+			</tr>
+			<tr>
+				<td>Método A – <code>ordenarProducto(...)</code></td>
+				<td>Elimina duplicados por código y ordena correctamente por nombre y código.</td>
+				<td>10.0</td>
+			</tr>
+			<tr>
+				<td>Método B – <code>clasificarPorUnicidad(...)</code></td>
+				<td>Agrupa correctamente según los rangos y conserva el orden de inserción.</td>
+				<td>10.0</td>
+			</tr>
+			<tr>
+				<td>Método C – <code>obtenerDestacados(...)</code></td>
+				<td>Filtra correctamente productos con más de un precio repetido y los ordena por nombre.</td>
+				<td>8.0</td>
+			</tr>
+			<tr>
+				<td>Método D – <code>buscarPorNombre(...)</code></td>
+				<td>Implementa correctamente búsqueda binaria sobre lista ordenada por nombre.</td>
+				<td>6.0</td>
+			</tr>
+			<tr>
+				<td>Salidas en consola</td>
+				<td>Presenta los resultados de forma clara, ordenada y coherente.</td>
+				<td>4.0</td>
+			</tr>
+			<tr>
+				<td><strong>Total</strong></td>
+				<td></td>
+				<td><strong>50.0</strong></td>
+			</tr>
+		</tbody>
+	</table>
+	<hr>
+	<h2 id="validaci%C3%B3n-autom%C3%A1tica">Validación automática</h2>
+	<p>Las pruebas unitarias validarán:</p>
+	<ul>
+		<li>Cálculos correctos de unicidad y repetición de precios.</li>
+		<li>Eliminación de duplicados por código.</li>
+		<li>Ordenamiento correcto en <code>TreeSet</code>.</li>
+		<li>Clasificación correcta en <code>Map&lt;String, List&lt;Producto&gt;&gt;</code>.</li>
+		<li>Implementación adecuada de búsqueda binaria.</li>
+		<li>Uso correcto de <code>TreeSet</code>, <code>Set</code>, <code>Map</code> y <code>List</code>.</li>
+	</ul>
+
+</body>
+
+</html>
