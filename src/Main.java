@@ -63,7 +63,7 @@ public class Main {
         System.out.println(clasificados);
         
 
-        System.out.println("--- Metodo C ---");
+        System.out.println("--- Metodo C  ---");
         List<Producto> destacados = controller.obtenerDestacados(lista);
         for (Producto p : destacados) {
             System.out.println(p);
